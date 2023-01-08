@@ -1,0 +1,148 @@
+
+import os
+from os import rename, listdir, path, replace
+from random import randint
+import shutil
+
+
+# Переименование файлов рабочих
+# _______________________________________________________________________________________
+
+def Rename():
+    numbers = []
+    # Список номеров
+    for i in range(40):
+        if i < 10:
+            numbers.append('0' + str(i))
+        else:
+            numbers.append(str(i))
+
+
+    # Переименование файлов
+    fnames = listdir('.')
+    for num in numbers:
+        i = 0
+        for fname in fnames:
+            if fname.rfind(num) > 0:
+                rename(fname, fname.replace(fname[0:fname.rfind(num)+2], '(Вселенная роботов) Урок ' + num))
+                # print(num + ' ' + fname)
+
+# _________________________________________________________________________________________
+
+# Rename()
+
+
+
+
+
+
+# _________________________________________________________________________________________________
+# Рандомная перемешка массива
+def shuffle(arr):
+    for n in range(len(arr) - 1):
+        rnd = randint(0, (len(arr) - 1))
+        val1 = arr[rnd] 
+        val2 = arr[rnd - 1]
+
+        arr[rnd - 1] = val1
+        arr[rnd] = val2
+
+    return Num(arr)
+
+
+# __________________________________________________________________________________________________
+# Нумерация строк в массиве
+def Num(arr):
+    arr1 = []
+    for i in range(len(arr)):
+        arr1.append(arr[i]+'  #'+str(i+1))
+
+    return arr1
+
+
+# ___________________________________________________________________________________________________
+# Массив рандомных диркторий
+def Rand(b):
+    rand = []
+    i = 0
+    while i < len(b): 
+        g = [randint(0,len(b)), randint(0,len(b)), randint(0,len(b)), randint(0,len(b))]
+        if not g in rand:
+            rand.append(g)
+            i+=1
+    return rand
+
+
+
+
+# ________________________________________________________________________________
+# Создание тестового файла
+tar = 'rat3.txt'
+
+target = open(tar, 'w')
+target.write(' Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n Consequuntur, eligendi, aperiam, consequatur, \n perferendis non sequi voluptates asperiores soluta quam ad id beatae facere aut \n quod libero dignissimos inventore nesciunt commodi.')
+target.close()
+
+def Prank(tar):
+
+    target = open(tar, 'r')
+    a = target.readlines()
+
+    b = shuffle(a)
+    print('b = ', str(b))
+
+    l = len(b)
+
+
+    len_str = []
+    for i in range(l):
+        len_str.append(len(b[i]))
+    print(len_str)
+
+    o = randint(0,len(len_str)-1)
+    print(o)
+    print(len_str[int(o)])
+            
+
+
+    shutil.rmtree('funny game', ignore_errors=True)
+    path1 = str()
+
+
+    if not os.path.isdir("funny game"):
+        rand_len = Rand(b)
+        print(rand_len)
+        for i in range(l+1):
+
+            for j in range(l+1):
+
+                for k in range(l+1):
+                    
+                    os.makedirs('funny game/surprise ' + str(i) + '/mother ' + str(j) + '/f_cker ' + str(k))
+                    
+                    for t in range(l+1):
+                        path1 = 'funny game/surprise ' + str(i) + '/mother ' + str(j) + '/f_cker ' + str(k) + '/test' + str(t) + '.txt'
+
+                        f = open(path1, 'w')
+                        h = 0
+                        for rand in rand_len:
+                            if [i,j,k,t] == rand:
+                                # print(rand)
+                                # print(b[-1])
+                                f.write(b[-1])
+                                b.pop(-1)
+                                h = 1
+                        if h == 0: 
+                            
+                            p1 = str()
+                            o = randint(0,len(len_str)-1)
+                            # for u in range(os.path.getsize('rat3.txt')):
+                            for u in range(len_str[int(o)]):
+                                p1 += '0'
+                            f.write(p1)
+                            p1 = str()
+        
+
+
+Prank(tar)
+os.remove(tar)
